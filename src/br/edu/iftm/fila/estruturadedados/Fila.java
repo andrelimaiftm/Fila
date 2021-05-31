@@ -2,8 +2,8 @@ package br.edu.iftm.fila.estruturadedados;
 
 public class Fila<T> {
 
-    private T[] elementos;
-    private int tamanho;
+    protected T[] elementos;
+    protected int tamanho;
 
     public Fila(){
         this(10);
@@ -27,6 +27,22 @@ public class Fila<T> {
         }
         return false;
 
+    }
+
+    protected boolean enfileirar(int posicao, T elemento){
+        if(posicao < 0 || posicao > tamanho){
+            throw new IllegalArgumentException("Posição Invalida");
+        }
+
+        this.aumentaCapacidade();
+
+        for (int i = this.tamanho-1; i>=posicao; i--) {
+            this.elementos[i+1] = this.elementos[i];
+        }
+        this.elementos[posicao] = elemento;
+        this.tamanho++;
+
+        return true;
     }
 
     private void aumentaCapacidade(){
